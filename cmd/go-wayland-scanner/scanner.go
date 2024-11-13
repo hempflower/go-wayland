@@ -216,6 +216,10 @@ func writeInterface(w io.Writer, v Interface) {
 	ifaceName := toCamel(v.Name)
 	ifaceNameLower := toLowerCamel(v.Name)
 
+	// Interface name constant
+	fmt.Fprintf(w, "// %sName : %s\n", ifaceName, doc.Synopsis(v.Description.Summary))
+	fmt.Fprintf(w, "const %sName = \"%s\"\n", ifaceName, v.Name)
+
 	// Interface struct
 	fmt.Fprintf(w, "// %s : %s\n", ifaceName, doc.Synopsis(v.Description.Summary))
 	fmt.Fprint(w, comment(v.Description.Text))
