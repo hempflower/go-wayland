@@ -2,6 +2,5 @@ go 1.18
 
 use (
 	./cmd/go-wayland-scanner
-	./examples/imageviewer
 	./wayland
 )
