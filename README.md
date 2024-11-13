@@ -11,15 +11,3 @@ Go code is generated from protocol XML files using
 To load cursor, minimal port of `wayland-cursor` & `xcursor` in pure Go
 is located at [`wayland/cursor`](wayland/cursor) & [`wayland/cursor/xcursor`](wayland/cursor/xcursor)
 respectively.
-
-To demonstrate the functionality of this module
-[`examples/imageviewer`](examples/imageviewer) contains a simple image
-viewer. It demos displaying a top-level window, resizing of window,
-cursor themes, pointer & keyboard. Because it's in pure Go, it can be
-compiled without CGO. You can try it using following commands:
-
-```sh
-CGO_ENABLED=0 go install github.com/hempflower/go-wayland/examples/imageviewer@latest
-
-imageviewer file.jpg
-```
