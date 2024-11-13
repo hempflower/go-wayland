@@ -684,11 +684,16 @@ func writeEventDispatcher(w io.Writer, ifaceName string, v Interface) {
 						}
 					}
 
+					fmt.Fprintf(w, "%s := &%s{}\n", argName, argIface)
+					fmt.Fprintf(w, "%s.SetContext(i.Context())\n", argName)
+
 					if protocol.Name == "wayland" {
-						fmt.Fprintf(w, "e.%s = i.Context().GetProxy(Uint32(data[l :l+4])).(*%s)\n", argName, argIface)
+						fmt.Fprintf(w, "%s.SetID(Uint32(data[l :l+4]))\n", argName)
 					} else {
-						fmt.Fprintf(w, "e.%s = i.Context().GetProxy(client.Uint32(data[l :l+4])).(*%s)\n", argName, argIface)
+						fmt.Fprintf(w, "%s.SetID(client.Uint32(data[l :l+4]))\n", argName)
 					}
+
+					fmt.Fprintf(w, "e.%s = %s\n", argName, argName)
 				} else {
 					if protocol.Name == "wayland" {
 						fmt.Fprintf(w, "e.%s = i.Context().GetProxy(Uint32(data[l :l+4]))\n", argName)
