@@ -15,6 +15,11 @@ type Context struct {
 
 func (ctx *Context) Register(p Proxy) {
 	ctx.currentID++
+	// ensure we don't overwrite an existing object
+	if _, ok := ctx.objects[ctx.currentID]; ok {
+		ctx.Register(p)
+		return
+	}
 	p.SetID(ctx.currentID)
 	p.SetContext(ctx)
 	ctx.objects[ctx.currentID] = p
@@ -26,6 +31,12 @@ func (ctx *Context) Unregister(p Proxy) {
 
 func (ctx *Context) GetProxy(id uint32) Proxy {
 	return ctx.objects[id]
+}
+
+func (ctx *Context) SetProxy(id uint32, p Proxy) {
+	p.SetID(id)
+	p.SetContext(ctx)
+	ctx.objects[id] = p
 }
 
 func (ctx *Context) Close() error {
